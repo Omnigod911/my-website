@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Search / Wikipedia Simulator</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: #fff;
+            color: #202124;
+            overflow-y: auto;
+        }
+        
+        /* --- GOOGLE HOMEPAGE INTERFACE --- */
+        #results-page {
+            padding: 15px 20px;
+            box-sizing: border-box;
+        }
+        .mini-header {
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #ebebeb;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        .mini-logo {
+            font-size: 24px;
+            font-weight: bold;
+            margin-right: 25px;
+            user-select: none;
+        }
+        .g { color: #4285F4; }
+        .o1 { color: #EA4335; }
+        .o2 { color: #FBBC05; }
+        .g2 { color: #4285F4; }
+        .l { color: #34A853; }
+        .e { color: #EA4335; }
+        
+        .mini-search input {
+            width: 400px;
+            border: 1px solid #dfe1e5;
+            border-radius: 24px;
+            height: 38px;
+            padding: 0 15px;
+            font-size: 15px;
+            outline: none;
+        }
+        .easter-egg-banner {
+            background: linear-gradient(135deg, #e8f0fe 0%, #c2ecff 100%);
+            border: 1px solid #1a73e8;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+            max-width: 650px;
+            box-shadow: 0 4px 12px rgba(26,115,232,0.15);
+            position: relative;
+        }
+        .egg-badge {
+            background: #1a73e8;
+            color: white;
+            font-size: 11px;
+            font-weight: bold;
+            padding: 3px 8px;
+            border-radius: 10px;
+            text-transform: uppercase;
+        }
+        .egg-content h3 {
+            margin: 10px 0 5px 0;
+            color: #1967d2;
+            font-size: 22px;
+        }
+        .result-item { margin-bottom: 28px; max-width: 650px;}
+        .result-url { display: block; font-size: 12px; color: #202124; margin-bottom: 4px; }
+        .result-title { font-size: 20px; color: #1a0dab; text-decoration: none; cursor: pointer; }
+        .result-title:hover { text-decoration: underline; }
+        .result-snippet { font-size: 14px; color: #4d5156; margin-top: 4px; line-height: 1.6; }
+        
+        .hidden { display: none !important; }
+
+        /* --- SIMPLE CSS CONFETTI DROPS --- */
+        .confetti-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        .confetti-piece {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #4285F4;
+            top: -20px;
+            opacity: 0.8;
+            animation: fall 3s infinite linear;
+        }
+        @keyframes fall {
+            0% { top: -20px; transform: translateX(0) rotate(0deg); }
+            100% { top: 200px; transform: translateX(50px) rotate(360deg); }
+        }
+
+        /* --- WIKIPEDIA BIOGRAPHY INTERFACE --- */
+        #wikipedia-page {
+            font-family: 'Georgia','Times',serif;
+            background-color: #ffffff;
+            color: #202122;
+            padding: 30px 40px;
+            max-width: 900px;
+            margin: 0 auto;
+            box-sizing: border-box;
+        }
+        .wiki-nav-back {
+            font-family: sans-serif;
+            display: inline-block;
+            background-color: #f8f9fa;
+            border: 1px solid #a2a9b1;
+            padding: 6px 12px;
+            border-radius: 2px;
+            color: #202122;
+            text-decoration: none;
+            font-size: 13px;
+            margin-bottom: 25px;
+            cursor: pointer;
+        }
+        .wiki-nav-back:hover { background-color: #ffffff; }
+        .wiki-title {
+            font-size: 34px;
+            border-bottom: 1px solid #a2a9b1;
+            padding-bottom: 5px;
+            margin-top: 0;
+            margin-bottom: 5px;
+            font-weight: normal;
+        }
+        .wiki-subtitle {
+            font-family: sans-serif;
+            font-size: 13px;
+            color: #54595d;
+            margin-bottom: 20px;
+        }
+        .wiki-p { font-size: 15px; line-height: 1.6; margin-bottom: 20px; }
+        .wiki-heading {
+            font-size: 22px;
+            border-bottom: 1px solid #a2a9b1;
+            padding-bottom: 4px;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-weight: normal;
+        }
+        .wiki-list { font-family: sans-serif; font-size: 14px; line-height: 1.7; padding-left: 25px; }
+        .wiki-list li { margin-bottom: 12px; }
+    </style>
+</head>
+<body>
+
+    <!-- SCREEN 1: GOOGLE ENGINE RESULTS -->
+    <div id="results-page">
+        <div class="mini-header">
+            <div class="mini-logo">
+                <span class="g">G</span><span class="o1">o</span><span class="o2">o</span><span class="g2">g</span><span class="l">l</span><span class="e">e</span>
+            </div>
+            <div class="mini-search">
+                <input type="text" value="Gavin Space Science" readonly>
+            </div>
+        </div>
+
+        <div class="easter-egg-banner">
+            <div class="confetti-container">
+                <div class="confetti-piece" style="left:10%; background:#4285F4; animation-delay: 0s;"></div>
+                <div class="confetti-piece" style="left:30%; background:#EA4335; animation-delay: 0.5s;"></div>
+                <div class="confetti-piece" style="left:50%; background:#FBBC05; animation-delay: 0.2s;"></div>
+                <div class="confetti-piece" style="left:70%; background:#34A853; animation-delay: 0.8s;"></div>
+                <div class="confetti-piece" style="left:90%; background:#4285F4; animation-delay: 0.4s;"></div>
+            </div>
+            <div><span class="egg-badge">Google Easter Egg 🌟</span></div>
+            <div class="egg-content">
+                <h3>Hi Gavin! 👋</h3>
+                <p>Google wishes you an amazing 26th Birthday celebration!</p>
+            </div>
+        </div>
+
+        <div class="result-item">
+            <span class="result-url">https://youtube.com › @Omnigod5454</span>
+            <a class="result-title" href="https://youtube.com/@Omnigod5454" target="_blank">Gavin - Official YouTube Channel</a>
+            <p class="result-snippet">Welcome to my channel! Check out my upcoming vlogs, challenge streaks, and digital video creations. Hit subscribe!</p>
+        </div>
+
+        <div class="result-item">
+            <span class="result-url">https://wikipedia.org › wiki › Gavin_Astrophysics</span>
+            <a class="result-title" id="wiki-trigger-link">Gavin - Wikipedia Biography & Universe Guide</a>
+            <p class="result-snippet">
+                Gavin (born September 26, 2011) is a student residing in Vazhuthacaud, Trivandrum, Kerala, currently studying at Greenvalley International School near EMS Academy in Peyad... Click to read the full comprehensive biography article and deep space object directory.
+            </p>
+        </div>
+    </div>
+
+    <!-- SCREEN 2: WIKIPEDIA BIOGRAPHY PAGE -->
+    <div id="wikipedia-page" class="hidden">
+        <div class="wiki-nav-back" id="back-to-google-btn">← Back to Google Results</div>
+        
+        <h1 class="wiki-title">Gavin</h1>
+        <div class="wiki-subtitle">From Wikipedia, the free encyclopedia</div>
+        
+        <p class="wiki-p">
+            <strong>Gavin</strong> (born September 26, 2011) is a student based in Kerala, India, recognized within online interface platforms for his fascination with structural astrophysics, celestial tracking systems, and spatial mathematics.
+        </p>
+
+        <h2 class="wiki-heading">Early life and education</h2>
+        <p class="wiki-p">
+            Gavin was born on September 26, 2011. He resides in the neighborhood of <strong>Vazhuthacaud, Trivandrum, Kerala</strong>. He currently pursues his secondary education profile at the <strong>Greenvalley International School</strong>, located adjacent to the EMS Academy hub in Peyad. Outside of formal school pathways, he has dedicated extensive independent study toward cataloging extreme space phenomena, maintaining a deep particular interest in the computational mechanics and internal gravity workings of <strong>black holes</strong>.
+        </p>
+
+        <h2 class="wiki-heading">Celestial Objects & Space Directory</h2>
+        <p class="wiki-p">
+            The universe is constructed of varied high-energy stellar debris and extreme cosmic anomalies operating under absolute gravitational thresholds. Below is an overview of fields of interest studied:
+        </p>
+        <ul class="wiki-list">
+            <li><strong>Black Holes:</strong> Spherical regions of collapsed spacetime where the escape velocity requirements completely exceed light speed metrics. Matter entering passes beyond a terminal point of return known as the event horizon, settling into an infinitely dense center coordinate called a gravitational singularity.</li>
+            <li><strong>Quasars:</strong> Blazing galactic nuclei powered by supermassive black holes processing gas rings at extreme speed, generating continuous energy columns visible entirely across the observable structural universe.</li>
+            <li><strong>Magnetars:</strong> A specialized subclass of dead neutron stars wrapped in magnetic field rotations a trillion times stronger than Earth's, capable of producing massive surface structural fractures known as starquakes.</li>
